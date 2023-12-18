@@ -1,5 +1,7 @@
 export default function initAccordion() {
-  const accordionList = document.querySelectorAll('[data-anime="accordion"] dt');
+  const accordionList = document.querySelectorAll(
+    '[data-anime="accordion"] dt',
+  );
   const activeClass = 'ativo';
 
   function activeAccordion() {
@@ -16,3 +18,4 @@ export default function initAccordion() {
     });
   }
 }
+console.log('teste');
