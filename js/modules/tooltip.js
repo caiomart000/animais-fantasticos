@@ -2,15 +2,16 @@ export default class Tooltip {
   constructor(tooltips) {
     this.tooltips = document.querySelectorAll(tooltips);
 
-    //bind do objeto da classe aos callbacks
-    this.onMouseMove = this.onMouseMove.bind(this);
+    // bind do objeto da classe aos callbacks
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
   }
 
+  // Move a tooltip com base em seus estilos
+  // de acordo com a posição do mouse
   onMouseMove(event) {
     this.tooltipBox.style.top = `${event.pageY + 20}px`;
-    //troca de lado, se chegar no limite da janela
     if (event.pageX + 240 > window.innerWidth) {
       this.tooltipBox.style.left = `${event.pageX - 190}px`;
     } else {
@@ -18,14 +19,14 @@ export default class Tooltip {
     }
   }
 
-  //remove as tooltips e os eventos de move e leave
+  // Remove a tooltip e os eventos de mousemove e mouseleave
   onMouseLeave({ currentTarget }) {
     this.tooltipBox.remove();
     currentTarget.removeEventListener('mouseleave', this.onMouseLeave);
     currentTarget.removeEventListener('mousemove', this.onMouseMove);
   }
 
-  //cria a tootltip box e coloca no body
+  // Cria a tooltip box e coloca no body
   criarTooltipBox(element) {
     const tooltipBox = document.createElement('div');
     const text = element.getAttribute('aria-label');
@@ -35,16 +36,16 @@ export default class Tooltip {
     this.tooltipBox = tooltipBox;
   }
 
-  //cria a tooltip e adiciona os eventos de move e leave ao target
+  // Cria a tooltip e adiciona os eventos
+  // de mousemove e mouseleave ao target
   onMouseOver({ currentTarget }) {
-    //cria a tooltip box e coloca em uma propriedade
-
+    // cria a tooltipbox e coloca em uma propriedade
     this.criarTooltipBox(currentTarget);
     currentTarget.addEventListener('mousemove', this.onMouseMove);
     currentTarget.addEventListener('mouseleave', this.onMouseLeave);
   }
 
-  //adiciona os eventos de over a cada tootltip
+  // Adiciona os eventos de mouseover a cada tooltip
   addTooltipsEvent() {
     this.tooltips.forEach((item) => {
       item.addEventListener('mouseover', this.onMouseOver);
